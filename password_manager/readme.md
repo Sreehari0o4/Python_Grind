@@ -1,33 +1,45 @@
 # Password Manager (Learning)
 
-Minimal terminal password manager that stores usernames and encrypted passwords using Fernet (symmetric encryption). For learning only—do not use for real credentials.
+Minimal terminal password manager that stores usernames and encrypted passwords using Fernet. For learning only—do not use real credentials.
 
 ## Contents
 - passwrd_manager.py — CLI to add/view passwords
 - passwords.txt — encrypted entries (created at runtime)
-- key.key — encryption key (must exist; keep it safe)
+- key.key — encryption key (must exist in this folder)
 
 ## Setup
+Requirements: Python 3.10+, cryptography
 
-Requirements:
-- Python 3.10+
-- cryptography
-
-Windows (PowerShell):
+Install dependency (Windows PowerShell):
 ```powershell
-cd C:\zreehari\python\learn\password_manager
 python -m pip install cryptography
-# Create the encryption key (run once in this folder):
+```
+
+Generate the encryption key (one-time, creates key.key in this folder):
+- Windows (PowerShell):
+```powershell
 python -c "from cryptography.fernet import Fernet; open('key.key','wb').write(Fernet.generate_key())"
-# Run
+```
+- Ubuntu/macOS (bash):
+```bash
+python3 - <<'PY'
+from cryptography.fernet import Fernet
+open('key.key','wb').write(Fernet.generate_key())
+print('key.key created')
+PY
+```
+Alternative: uncomment write_key() in passwrd_manager.py and run once.
+
+Run:
+```powershell
 python .\passwrd_manager.py
 ```
 
 ## Usage
-- add — add a username and password (stored encrypted in passwords.txt)
-- view — list saved entries (decrypted using key.key)
+- add — add a username and password
+- view — list saved entries
 - q — quit
 
 Notes:
-- Do not lose key.key; without it, passwords cannot be decrypted.
-- Keep key.key private and secure.
+- Do not lose key.key; without it, entries cannot be decrypted.
+- Keep key.key private; do not commit key.key or
